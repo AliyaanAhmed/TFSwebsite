@@ -1,101 +1,122 @@
 import festivelogo from '../img/festive.png';
-import { Link } from "react-scroll";
+import { Link, animateScroll as scroll } from 'react-scroll';
+import { useState, useEffect } from 'react';
 
 function Navbar() {
-  document.addEventListener("scroll", function (e) {
-    if (window.screen.width < 768 && window.scrollY > 690) {
-      const gotop = document.querySelector(".gotop");
-      gotop.classList.add("display");
+  const [showGoTop, setShowGoTop] = useState(false);
+  const [showNav, setShowNav] = useState(false);
+  const [isBarOpened, setIsBarOpened] = useState(false);
 
-      const nav = document.querySelector(".navbar");
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const screenWidth = window.screen.width;
 
-      nav.classList.add("navopened");
-    } else if (window.screen.width > 768 && window.scrollY > 220) {
-      const gotop = document.querySelector(".gotop");
-      gotop.classList.add("display");
+      if (screenWidth < 768 && scrollPosition > 690) {
+        setShowGoTop(true);
+        setShowNav(true);
+      } else if (screenWidth > 768 && scrollPosition > 220) {
+        setShowGoTop(true);
+        setShowNav(true);
+      } else {
+        setShowGoTop(false);
+        setShowNav(false);
+      }
+    };
 
-      const nav = document.querySelector(".navbar");
+    document.addEventListener('scroll', handleScroll);
 
-      nav.classList.add("navopened");
-    } else {
-      const nav = document.querySelector(".navbar");
-      const gotop = document.querySelector(".gotop");
-      gotop.classList.remove("display");
-      nav.classList.remove("navopened");
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const openBar = () => {
+    setIsBarOpened(!isBarOpened);
+  };
+
+  const handleLinkClick = () => {
+    if (isBarOpened) {
+      setIsBarOpened(false);
     }
-  });
+  };
 
-  function openBar() {
-    const bar = document.querySelector(".bar");
-    bar.classList.toggle("opened");
-  }
+  const handleGoTopClick = () => {
+    scroll.scrollToTop({
+      duration: 1000,
+      smooth: true,
+    });
+  };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${showNav ? 'navopened' : ''}`}>
       <div className="container">
         <div className="row">
           <div className="logo-container">
             <h1 className="logo">
               <Link
+                activeClass="active"
                 spy={true}
                 smooth={true}
                 duration={1000}
                 to="headerbg"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
+                onClick={handleLinkClick}
               >
                 <img alt="hi" src={festivelogo} className="img-fluid" />
               </Link>
             </h1>
           </div>
-          <ul className="bar">
+          <ul className={`bar ${isBarOpened ? 'opened' : ''}`}>
             <li>
               <Link
-                onClick={openBar}
                 activeClass="active"
                 spy={true}
                 smooth={true}
                 duration={1000}
                 to="headerbg"
                 offset={-100}
+                onClick={handleLinkClick}
               >
                 Home
               </Link>
             </li>
             <li>
               <Link
-                onClick={openBar}
                 activeClass="active"
                 to="services"
                 spy={true}
                 smooth={true}
                 duration={1000}
                 offset={-100}
+                onClick={handleLinkClick}
               >
                 Services
               </Link>
             </li>
             <li>
               <Link
-                onClick={openBar}
                 to="about-scroll"
                 spy={true}
                 smooth={true}
                 duration={1000}
                 activeClass="active"
                 offset={-200}
+                onClick={handleLinkClick}
               >
                 About
               </Link>
             </li>
             <li>
               <Link
-                onClick={openBar}
                 activeClass="active"
                 to="bookings"
                 spy={true}
                 smooth={true}
                 duration={1000}
                 className="book-now-button"
+                onClick={handleLinkClick}
+                offset={-200}
               >
                 Book Now!
               </Link>
@@ -108,6 +129,7 @@ function Navbar() {
           </div>
         </div>
       </div>
+
     </nav>
   );
 }
