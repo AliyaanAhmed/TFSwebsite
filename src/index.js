@@ -1,12 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
 import App from './App';
+import './index.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  ReactDOM.render(
+ReactDOM.render(
   <React.StrictMode>
     <App />
+    <ToastContainer />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
+
+
 

@@ -9,12 +9,12 @@ function Header() {
     // Set the fade-in effect immediately on the first load
     setFadeIn(true);
 
-    // Function to toggle the fade-in effectt
+    // Function to toggle the fade-in effect
     const toggleFade = () => {
       setFadeIn((prevValue) => !prevValue);
     };
 
-    // Set an interval to toggle the fade every 5 seconds
+    // Set an interval to toggle the fade every 4 seconds
     const interval = setInterval(toggleFade, 4000);
 
     // Clear the interval when the component is unmounted or the dependency changes

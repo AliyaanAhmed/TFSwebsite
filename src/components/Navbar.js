@@ -1,5 +1,6 @@
-import festivelogo from '../img/festive.png'
+import festivelogo from '../img/festive.png';
 import { Link } from "react-scroll";
+
 function Navbar() {
   document.addEventListener("scroll", function (e) {
     if (window.screen.width < 768 && window.scrollY > 690) {
@@ -23,9 +24,9 @@ function Navbar() {
       nav.classList.remove("navopened");
     }
   });
+
   function openBar() {
     const bar = document.querySelector(".bar");
-
     bar.classList.toggle("opened");
   }
 
@@ -33,17 +34,19 @@ function Navbar() {
     <nav className="navbar">
       <div className="container">
         <div className="row">
-          <h1 className="logo">
-            <Link
-              spy={true}
-              smooth={true}
-              duration={1000}
-              to="headerbg"
-              style={{ cursor: "pointer" }}
-            >
-              <img alt="hi" src={festivelogo} className="img-fluid" />
-            </Link>
-          </h1>
+          <div className="logo-container">
+            <h1 className="logo">
+              <Link
+                spy={true}
+                smooth={true}
+                duration={1000}
+                to="headerbg"
+                style={{ cursor: "pointer" }}
+              >
+                <img alt="hi" src={festivelogo} className="img-fluid" />
+              </Link>
+            </h1>
+          </div>
           <ul className="bar">
             <li>
               <Link
@@ -87,14 +90,14 @@ function Navbar() {
             <li>
               <Link
                 onClick={openBar}
-                to="contact"
+                activeClass="active"
+                to="bookings"
                 spy={true}
                 smooth={true}
                 duration={1000}
-                activeClass="active"
-                offset={-200}
+                className="book-now-button"
               >
-                Contact
+                Book Now!
               </Link>
             </li>
           </ul>
@@ -108,4 +111,5 @@ function Navbar() {
     </nav>
   );
 }
+
 export default Navbar;
